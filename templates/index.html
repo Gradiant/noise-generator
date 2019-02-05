@@ -1,0 +1,41 @@
+<!doctype html>
+<head>
+<title>noise-generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+   <script src="/static/noise_gen.js"></script>
+   <link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<nav>
+    <div><img src="/static/arq_logo.png" alt="logo"></div>
+  <h1> Noise Generator</h1>
+</nav>
+<div id="noise_info">
+          <h2> Noises </h2>
+         <div  onclick="show_noises()"> Refresh <i class="fa fa-refresh"></i></div>
+         <div class="noises">
+         <table><thead>
+          <tr><th>id<i class="fa fa-plus" id="noise_add"></i></th>
+              <th>Endpoint</th>
+              <th>bw</th><th>status</th><th>start</th><th>timeout</th><th>output</th>
+             </thead>
+             <tbody></tbody>
+         </table>
+           </div>
+</div>
+
+<div id="confirm-noise"  hidden>
+    <div class="message">
+        endpoint:   <input type="text" id="endpoint" placeholder="e.g. 10.0.0.4"><br/>
+        bandwidth:  <input type="text" id="bw" value="100"> <select id="bw_units">
+                    <option value="Mbps" selected="selected">Mbps</option></select><br/>
+        timeout:    <input type="text" id="timeout" value="10"> seconds<br/>
+    </div>
+</div>
+
+
+</body>
