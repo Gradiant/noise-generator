@@ -1,4 +1,4 @@
-c# Noise Generator
+# Noise Generator
  
  
 ## ¿What is for?
@@ -8,12 +8,12 @@ It belongs to the Arqueopterix Project and It is used to set traffic noise on a 
 In the project the Noise generator set an udp stream towards an iperf3 server endpoint to add non-prioritized traffic 
 to a router output interface.
 The default throughput of the UDP flow is 100Mbps and It will run for 60 seconds, but you can add a
- specific throughput and timeout for the UDP flow.
+ specific throughput and timeout for the UDP flow.   
 
-More information of the Arqueopterix project at [https://www.arqueopterix.es](https://www.arqueopterix.es).
+More information of the Arqueopterix project at: [Confluence](https://intranet.gradiant.org/confluence/display/IAP).
  
 ## License
-LICENSE.md file
+LICENSE file
  
   
 ## Dependencies
@@ -27,7 +27,7 @@ Python Dependencies can be install with
  
 ```python3 -m pip install -r requirements.txt```
 
-Sources for iperf 3.5 can be found here: [https://github.com/esnet/iperf/archive/3.5.tar.gz](https://github.com/esnet/iperf/archive/3.5.tar.gz).
+Sources for iperf 3.5 can be found here: https://github.com/esnet/iperf/archive/3.5.tar.gz.
   
 ## Getting Started
 
@@ -35,7 +35,7 @@ Sources for iperf 3.5 can be found here: [https://github.com/esnet/iperf/archive
 Build the docker image with
 
 ```
-docker build -t noise-generator:0.1.0 .
+docker build -t noise-generator .
 
 ```
 
@@ -56,12 +56,12 @@ It deploys an iperf3 server at container *c1* connected to a docker network *tcn
 Then it launches the noise-gen to manage udp noise flows. We will test the generation of udp noise flows towards c1.
 
 ```
-  ___________     ________________ 
-|iperf3-server|   |   noise-gen    | 
+  ___________     ________________   
+|iperf3-server|   |   noise-gen    |  
 | __________  |   |  __________    |
 || eth0     | |   | |  eth0    |   |
 ||172.30.0.1| |   |_|_172.30.0.2___| 
-      |________________| 
+      |________________|           
             noisenet
 
 ``` 
@@ -73,7 +73,7 @@ Open a terminal and get h1 output logs:
 Open [noise-geneartor-ui](http://localhost:5001).
 
 To add noise traffic at noisenet, click on the (+) button at the endpoint table header.
-Configure a UDP flow to h1 (172.30.0.1)
+Configure a UDP flow to h1 (172.30.0.1). You can also set the UDP port with IP:port. If not set, the default value is 5201.
 
 ![default_rate_img](images/add_noise.png)
 
@@ -95,12 +95,3 @@ For example, flow should be stopped if you refresh the table after 10 seconds (d
 You can manually stop the flow if you press in the stop icon next to the flow status.
 You can remote the flow from the table pressing the (X) next to the endpoint. Note: flow is stopped before being removed.
 Received rate should mirror the policy rate.
-
-## Versions
- 
-- **0.1.0**
-Released 05 of February 2018
- 
-  **Changelog**
- 
-  - Initial code.

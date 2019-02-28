@@ -6,6 +6,7 @@ import os
 app = Flask(__name__)
 
 parallel = os.getenv('PARALLEL', 10)
+
 noises_dict = dict()
 noise_current_id = 0
 
@@ -29,10 +30,11 @@ def post_noise():
     noise_current_id = noise_current_id + 1
     json_request = request.get_json()
     logging.debug('post noise -> {}'.format(json_request))
-    endpoint = json_request['endpoint']
+    endpoint_ip = json_request['endpoint_ip']
+    endpoint_port = json_request.get('endpoint_port', 5201)
     bw = json_request.get('bw', None)
     timeout = json_request.get('timeout', None)
-    noise = Noise(noise_id, endpoint, bw, timeout, parallel)
+    noise = Noise(noise_id, endpoint_ip, endpoint_port, bw, timeout, parallel)
     noises_dict[noise_id] = noise
     return jsonify(noise.as_dict())
 
@@ -68,8 +70,3 @@ logging.basicConfig(format='%(asctime)s %(levelname)s:%(name)s:%(message)s', lev
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
-
-
-
-
-

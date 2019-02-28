@@ -7,9 +7,10 @@ logger = logging.getLogger(__name__)
 
 
 class Noise(Popen):
-    def __init__(self, id, endpoint, bw='100Mbps', timeout=10, parallel=10):
+    def __init__(self, id, endpoint_ip, endpoint_port, bw='100Mbps', timeout=10, parallel=10):
         self.id = id
-        self.endpoint = endpoint
+        self.endpoint_ip = endpoint_ip
+        self.endpoint_port = endpoint_port
         self.bw = bw
         self.timeout = timeout
         self.status = 'Running'
@@ -17,8 +18,9 @@ class Noise(Popen):
         self.parallel = parallel
         self.end = None
         self.out = None
-        cmd = "iperf3 -c {} -u -b {} -t {} --connect-timeout 3000 -P {}".format(
-            self.endpoint,
+        cmd = "iperf3 -c {} -p {} -u -b {} -t {} --connect-timeout 3000 -P {}".format(
+            self.endpoint_ip,
+            self.endpoint_port,
             self.bw,
             self.timeout,
             self.parallel)
@@ -48,7 +50,8 @@ class Noise(Popen):
                 self.status = 'Stopped'
                 self.end = self.start + datetime.timedelta(seconds=self.timeout)
         return {'id': self.id,
-                'endpoint': self.endpoint,
+                'endpoint_ip': self.endpoint_ip,
+                'endpoint_port': self.endpoint_port,
                 'status': self.status,
                 'out': self.out if self.status == 'Failed' else None,
                 'bw': self.bw,
@@ -56,7 +59,3 @@ class Noise(Popen):
                 'start': self.start,
                 'end': self.end
                 }
-
-
-
-

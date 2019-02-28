@@ -1,8 +1,8 @@
 
-function validate_ip(input_text)
+function validate_endpoint(input_text)
 {
-   var ip_format = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-   return input_text.match(ip_format)
+   var endpoint_format = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:[0-9]+)?$/;
+   return input_text.match(endpoint_format)
 }
 
 function add_event_handlers() {
@@ -16,11 +16,16 @@ function add_event_handlers() {
                       buttons: {
                         "Accept": function() {
                            noise = {};
-                           if (validate_ip($('#confirm-noise > .message > #endpoint').val())) {
-                               noise.endpoint = $('#confirm-noise > .message > #endpoint').val()
+                           $('#confirm-noise > .message > #endpoint')
+                           endpoint = $('#confirm-noise > .message > #endpoint').val().split(":");
+                           if (validate_endpoint(endpoint[0])) {
+                               noise.endpoint_ip = endpoint[0];
+                               if (endpoint.length === 2) {
+                                 noise.endpoint_port = parseInt(endpoint[1]);
+                               }
                            }
                            else{
-                               alert("Noise endpoint should be set to a valid IP");
+                               alert("Noise endpoint should be in the format IPv4 or IPv4:port");
                                return;
                            }
                            if ($('#confirm-noise > .message > #bw').val() != '') {
@@ -90,7 +95,7 @@ function show_noises() {
                             +noise.id
                             +'<i class="fa fa-remove" onclick=delete_noise("'
                             +noise.id+'")></i></td>' +
-                            '<td>'+noise.endpoint+'</td>' +
+                            '<td>'+noise.endpoint_ip + ':' + noise.endpoint_port + '</td>' +
                             '<td>'+noise.bw+'</td>' +
                             '<td>'+noise.status+'<i class="fa fa-stop-circle" onclick=stop_noise("'
                             +noise.id+'")></i></td>' +
@@ -106,4 +111,3 @@ $(document).ready(function() {
     console.log("ready")
     add_event_handlers();
 });
-
