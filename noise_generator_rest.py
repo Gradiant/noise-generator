@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-parallel = os.getenv('PARALLEL', 10)
+parallel = os.getenv('PARALLEL', 1)
 
 noises_dict = dict()
 noise_current_id = 0

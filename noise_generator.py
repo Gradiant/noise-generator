@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class Noise(Popen):
-    def __init__(self, id, endpoint_ip, endpoint_port, bw='100Mbps', timeout=10, parallel=10):
+    def __init__(self, id, endpoint_ip, endpoint_port, bw='100Mbps', timeout=10, parallel=1):
         self.id = id
         self.endpoint_ip = endpoint_ip
         self.endpoint_port = endpoint_port
